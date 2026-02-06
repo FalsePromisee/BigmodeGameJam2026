@@ -7,7 +7,7 @@ public class Jump : MonoBehaviour
     private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer; 
     
-    private float _jumpForce = 15f;
+    private float _jumpForce = 5f;
     private bool _isGrounded = true;
     
     
