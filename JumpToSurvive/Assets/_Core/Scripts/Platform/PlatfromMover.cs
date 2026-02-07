@@ -28,7 +28,7 @@ public class PlatfromMover : MonoBehaviour
         if (collision.gameObject.GetComponent<PlayerMovement>())
         {
             Debug.Log("Player touched platform");
-            _rigidbody.transform.localPosition = new Vector2(_endXPos, _endYPos);
+            
         }
 
     }
