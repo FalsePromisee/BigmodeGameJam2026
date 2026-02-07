@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     
     private float horizontalInput;
     [SerializeField] private float _speed;
+    
+    private bool _isFacingRight = true;
 
     private void Awake()
     {
@@ -17,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         InputHandler();
+        Flip();
     }
 
     private void FixedUpdate()
@@ -35,5 +38,15 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
     }
-    
+
+    private void Flip()
+    {
+        if (_isFacingRight && horizontalInput < 0f || !_isFacingRight && horizontalInput > 0f)
+        {
+            _isFacingRight = !_isFacingRight;
+            Vector2 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
+    }
 }

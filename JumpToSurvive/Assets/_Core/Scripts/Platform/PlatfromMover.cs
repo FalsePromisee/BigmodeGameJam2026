@@ -1,35 +1,50 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlatfromMover : MonoBehaviour
 {
-    private Rigidbody2D _rigidbody;
+    [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private BoxCollider2D _collider;
+    
+    private float _timeToDestroy = 3f;
+    private float _timeToReturn = 5f;
+    private bool _isObjectDestroyed;
 
-    private float _startYPos = 0f;
-    private float _endYPos = 3f;
-
-    private float _timeToReturn = 3f;
-
-    //might need
-    private float _startXPos = 0f;
-    private float _endXPos = 0f;
-
-    private void Awake()
+    private void Update()
     {
-        _rigidbody = GetComponentInChildren<Rigidbody2D>();
+        if (_isObjectDestroyed)
+        {
+            _timeToReturn -= Time.deltaTime;
+            if (_timeToReturn <= 0f)
+            {
+                PlatformReturn();
+                _timeToReturn = 5f;
+            }
+        }
     }
-
-    void Update()
-    {
-        
-    }
-
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerMovement>())
         {
-            Debug.Log("Player touched platform");
-            
+            Debug.Log("Player touched me...");
+            StartCoroutine(PlatfromDestroyer());
         }
-
     }
+
+    private IEnumerator PlatfromDestroyer()
+    {
+        yield return new WaitForSeconds(_timeToDestroy);
+        _sprite.enabled = false;
+        _collider.enabled = false;
+        _isObjectDestroyed = true;
+    }
+
+    private void PlatformReturn()
+    {
+        _sprite.enabled = true;
+        _collider.enabled = true;
+        _isObjectDestroyed = false;
+    }
+    
 }

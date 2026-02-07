@@ -1,14 +1,13 @@
-using System;
 using UnityEngine;
 
 public class Jump : MonoBehaviour
 {
     private Rigidbody2D _rigidBody;
-    private Transform _groundCheck;
+    [SerializeField] private GameObject _groundCheck;
     [SerializeField] private LayerMask _groundLayer; 
     
-    private float _jumpForce = 5f;
-    private bool _isGrounded = true;
+    [SerializeField] private float _jumpForce = 7f;
+    private bool _isGrounded;
     
     
     private void Awake()
@@ -18,7 +17,9 @@ public class Jump : MonoBehaviour
 
     void Update()
     {
+        IsGrounded();
         InputJump();
+
     }
     
     private void InputJump()
@@ -29,4 +30,13 @@ public class Jump : MonoBehaviour
             
         }
     }
+
+    private void IsGrounded()
+    {
+        float _capsuleDistance = .1f;
+        float _capsuleAngle = 0f;
+        _isGrounded = Physics2D.CapsuleCast(_groundCheck.transform.position, new Vector2(0.3f, 0.3f),
+            CapsuleDirection2D.Vertical, _capsuleAngle, Vector2.down,  _capsuleDistance, _groundLayer);
+    }
+    
 }
