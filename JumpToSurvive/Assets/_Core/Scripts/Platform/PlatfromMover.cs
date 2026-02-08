@@ -27,7 +27,6 @@ public class PlatfromMover : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerMovement>())
         {
-            Debug.Log("Player touched me...");
             StartCoroutine(PlatfromDestroyer());
         }
     }

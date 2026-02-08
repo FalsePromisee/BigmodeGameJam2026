@@ -7,7 +7,7 @@ public class Jump : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer; 
     
     [SerializeField] private float _jumpForce = 7f;
-    private bool _isGrounded;
+    public bool _isGrounded {get; private set;}
     
     
     private void Awake()
